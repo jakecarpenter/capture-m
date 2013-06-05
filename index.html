@@ -52,71 +52,6 @@
       <!-- Site name for smallar screens -->
       <a href="index.html" class="brand">Try<span class="bold">Capture</span></a>
 
-      <!-- Navigation starts -->
-      <div class="nav-collapse collapse">        
-
-
-
-        <!-- Links -->
-        <ul class="nav pull-right">
-          <li class="dropdown pull-right">            
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <img src="img/user.jpg" alt="" class="nav-user-pic" /> Jake Carpenter <b class="caret"></b>              
-            </a>
-            
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li><a href="#"><i class="icon-user"></i> Profile</a></li>
-              <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
-              <li><a href="login.html"><i class="icon-off"></i> Logout</a></li>
-            </ul>
-          </li>
-          
-        </ul>
-
-        <!-- Notifications -->
-        <ul class="nav pull-right">
-
-            <!-- Members button with number of latest members count -->
-            <li class="dropdown dropdown-big">
-              <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                <i class="icon-user"></i> Participants <span id="user-count-label" class="badge badge-success">6</span> 
-              </a>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <!-- Heading - h5 -->
-                    <h5><i class="icon-user"></i> Participants</h5>
-                    <!-- Use hr tag to add border -->
-                    <hr />
-                  </li>
-                  <li>
-                    <!-- List item heading h6-->
-                    <a href="#">Ravi Kumar</a> <span class="label label-warning pull-right">Free</span>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <a href="#">Balaji</a> <span class="label label-important pull-right">Premium</span>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <a href="#">Kumarasamy</a> <span class="label label-warning pull-right">Free</span>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>                  
-                  <li>
-                    <div class="drop-foot">
-                      <a href="#">View All</a>
-                    </div>
-                  </li>                                    
-                </ul>
-            </li> 
-
-        </ul>
-
-      </div>
 
     </div>
   </div>
@@ -129,36 +64,57 @@
 
   	<!-- Main bar -->
   	<div class="mainbar">
-      
-	    <!-- Page heading -->
-	    <div class="page-head">
-        <!-- Page heading -->
-	      <h2 class="pull-left">Jake's Test Event
-          <!-- page meta -->
-          <span class="page-meta">May 1st - 31st</span>
-        </h2>
-
-
-        <!-- Breadcrumb -->
-        <div class="bread-crumb pull-right">
-          <a href="index.html"><i class="icon-home"></i> Home</a> 
-          <!-- Divider -->
-          <span class="divider">/</span> 
-          <a href="#" class="bread-current">Events</a>
-        </div>
-
-        <div class="clearfix"></div>
-
-	    </div>
-	    <!-- Page heading ends -->
-
-
+     
 
 	    <!-- Matter -->
 
-	    <div class="matter">
+	    <div class="matter" id="page-content">
+	    	
+	    	<!-- Widget starts -->
+            <div class="widget worange">
+              <!-- Widget head -->
+              <div class="widget-head">
+                <i class="icon-lock"></i> Login 
+              </div>
 
-          </div>
+              <div class="widget-content">
+                <div class="padd">
+                  <!-- Login form -->
+                  <form id="login-form" class="form-horizontal">
+                    <!-- Email -->
+                    <div class="control-group">
+                      <label class="control-label" for="login-email">Username</label>
+                      <div class="controls">
+                        <input type="text" id="login-email" placeholder="Username">
+                      </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="control-group">
+                      <label class="control-label" for="inputPassword">Password</label>
+                      <div class="controls">
+                        <input type="password" id="login-password" placeholder="Password">
+                      </div>
+                    </div>
+                    <!-- Remember me checkbox and sign in button -->
+                    <div class="control-group">
+                      <div class="controls">
+                        <label class="checkbox">
+                          <input type="checkbox"> Remember me
+                        </label>
+                        <br>
+                        <button type="submit" class="btn btn-danger">Sign in</button>
+                        <button type="reset" class="btn">Reset</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+                <div class="widget-foot">
+                  Not Registered? <a href="#" id="register-here">Register here</a>
+                </div>
+
+        </div>
 
 
 		<!-- Matter ends -->
@@ -179,9 +135,146 @@
 <script src="js/jquery.js"></script> <!-- jQuery -->
 <script src="js/bootstrap.js"></script> <!-- Bootstrap -->
 <script src="js/jquery-ui-1.10.2.custom.min.js"></script> <!-- jQuery UI -->
-<script src="js/filter.js"></script> <!-- Filter for support page -->
-<script src="js/custom.js"></script> <!-- Custom codes -->
-<script src="js/charts.js"></script> <!-- Custom chart codes -->
+<script src="//trycapture.com/assets/scripts/jquery.cookie.js"></script> <!-- jquery Cookie -->
+
+<script type="text/javascript">
+//events
+        //login form submit
+          $(document).on('submit', "#login-form", function(el) {
+            doLogin($("#login-email").val(), $("#login-password").val());
+            el.preventDefault();
+          });
+
+		//settings
+		
+		 //parse app key
+        var parseAppId = 'JfuHcRkELk91tbejwxCllYPRyauk3s4jCnTKQjah';
+
+        //parse rest key
+        var parseRestKey = 'LO8kGXmk83QlC2vQI1QGcEkt3cNDeIC2RHNogfpn';
+
+        //parse server
+        var parseServer = 'api.parse.com';
+
+        //put it together 
+        var parseHost = "https://" +  parseServer;
+        
+        var parseSessionToken = '';
+        var parseUser = "";
+        
+		//utils
+		 //some error handling 
+        var requestError = function(error){
+          console.log(error);
+          //return error;
+        };
+
+        // stuff for the header building
+        var buildHeader = function(xhr) {
+          xhr.setRequestHeader("X-Parse-Application-Id", parseAppId);
+          xhr.setRequestHeader("X-Parse-REST-API-Key", parseRestKey);
+        };
+		
+		//login
+        var doLogin = function(user, password){
+           var params = { 'username':  user,
+                          'password': password };
+
+             $.ajax({
+                beforeSend : buildHeader,
+                type: 'get',
+                url: parseHost + '/1/login',
+                data: params,
+                success: onLoginSuccess,
+                error: requestError,
+              });
+        };
+        
+        var onLoginSuccess = function(data){
+		  
+		  $.cookie('capture-user', data.objectId);
+		  $.cookie('capture-session', data.sessionToken);
+		  
+		  parseSessionToken = data.sessionToken;
+		  parseUser = data.objectId;
+		  
+			$("#page-content").load("page_templates/link.html");
+		
+		  console.log("data");
+        };
+        	
+        var facebookLink = function(){
+        	FB.login(function(response) {
+			   if (response.authResponse) {
+			   	var authResponse =response.authResponse;
+			   	console.log(authResponse);
+			   	
+			     FB.api('/me', function(response) {
+			     	
+			     	var expiration_date = new Date();
+			     	expiration_date.setSeconds(expiration_date.getSeconds() + authResponse.expiresIn);
+       				 expiration_date = expiration_date.toISOString();
+       				 
+					var params = { 
+							"authData": {
+								"facebook": {
+									"id": response.id,
+									"access_token": authResponse.accessToken,
+									"expiration_date": expiration_date
+								}
+							} };
+                          
+                     
+
+		             $.ajax({
+		                beforeSend : function(xhr){
+		                	buildHeader(xhr);
+		                	//add an extra header with our session token.
+                     		 xhr.setRequestHeader("X-Parse-Session-Token", parseSessionToken);
+		                	},
+		                type: 'put',
+    					contentType: 'application/json',
+		                url: parseHost + '/1/users/' + parseUser,
+		                data: JSON.stringify(params),
+		                success: function(data){
+		                	console.log(data);
+		                },
+		                error: requestError,
+		              });
+			     });
+			   } else {
+			     console.log('User cancelled login or did not fully authorize.');
+			   }
+			 });
+        }
+    
+	
+</script>
+
+<script> //<!-- facebook stuff -->
+    // Additional JS functions here
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '519438568120137', // App ID
+        channelUrl : '//m.trycapture.com/channel.html', // Channel File
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
+
+      // Additional init code here
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d){
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       ref.parentNode.insertBefore(js, ref);
+     }(document)); 
+  </script>
 
 </body>
 </html>
