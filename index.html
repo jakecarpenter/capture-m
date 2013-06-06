@@ -161,11 +161,12 @@
         
         var parseSessionToken = '';
         var parseUser = "";
+        var parseUsername = "";
         
 		//utils
 		 //some error handling 
         var requestError = function(error){
-          console.log(error);
+          console.log(error.responseText);
           //return error;
         };
 
@@ -190,17 +191,29 @@
               });
         };
         
+        var doLogout = function(){
+        	$.removeCookie('capture-user');
+        	$.removeCookie('capture-username');
+        	$.removeCookie('capture-session');
+        	
+        	location.reload();
+        };
+        
         var onLoginSuccess = function(data){
-		  
-		  $.cookie('capture-user', data.objectId);
-		  $.cookie('capture-session', data.sessionToken);
+       		$.cookie('capture-username', data.username);       
+			$.cookie('capture-user', data.objectId);
+			$.cookie('capture-session', data.sessionToken);
 		  
 		  parseSessionToken = data.sessionToken;
 		  parseUser = data.objectId;
 		  
 			$("#page-content").load("page_templates/link.html");
 		
-		  console.log("data");
+		 
+        };
+        
+        var twitterLink = function(){
+        	
         };
         	
         var facebookLink = function(){
@@ -248,6 +261,14 @@
 			 });
         }
     
+    	$(document).ready(function(){
+			if($.cookie('capture-user') != undefined){
+				$("#page-content").load("page_templates/link.html");
+				parseUser = $.cookie('capture-user');
+				parseSessionToken = $.cookie('capture-session');
+				parseUsername = $.cookie('capture-username');
+			}
+    	});
 	
 </script>
 
